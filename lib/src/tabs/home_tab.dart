@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _buildBodyBack() => Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color.fromARGB(255, 211, 118, 130),
-                    Color.fromARGB(255, 211, 190, 130)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
+              gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 211, 118, 130),
+            Color.fromARGB(255, 211, 190, 130)
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         );
 
     return Stack(
-      children: <Widget> [
+      children: <Widget>[
         _buildBodyBack(),
         CustomScrollView(
           slivers: <Widget>[
@@ -26,7 +26,37 @@ class HomeTab extends StatelessWidget {
                 centerTitle: true,
                 title: const Text("Novidades"),
               ),
-            )
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: Firestore.instance
+                  .collection("home")
+                  .orderBy("pos")
+                  .getDocuments(),
+              // ignore: missing_return
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+
+                  return SliverToBoxAdapter(
+                    child: Container(
+                      height: 200.0,
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  );
+                else{
+                  print(snapshot.data.documents.length);
+                  return SliverToBoxAdapter(
+                    child: Container(
+                      height: 200.0,
+                      alignment: Alignment.center,
+                      child: Container(),
+                    ),
+                  );
+                }
+              },
+            ),
           ],
         )
       ],
