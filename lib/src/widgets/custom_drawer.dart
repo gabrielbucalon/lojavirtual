@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/src/tiles/drawer_tiles.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -25,25 +26,35 @@ class CustomDrawer extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Positioned(
-                      top: 8,
-                      left: 0,
+                      top: 8.0,
+                      left: 0.0,
                       child: Text(
                         "Flutter's\nClothing",
                         style: TextStyle(
-                            fontSize: size.width * 0.8,
+                            fontSize: 34,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
                     Positioned(
-                      top: 0,
-                      bottom: 0,
+                      left: 0.0,
+                      bottom: 0.0,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Olá",
+                            "Olá,",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              "Entre ou cadastra-se >",
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           )
                         ],
                       ),
@@ -51,6 +62,11 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+              Divider(),
+              DrawerTile(icon: Icons.home, text: "Inicio"),
+              DrawerTile(icon: Icons.list, text: "Produtos"),
+              DrawerTile(icon: Icons.location_on, text: "Lojas"),
+              DrawerTile(icon: Icons.playlist_add_check, text: "Meus Pedidos"),
             ],
           ),
         ],
