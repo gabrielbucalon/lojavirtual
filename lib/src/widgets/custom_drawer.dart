@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/src/tiles/drawer_tiles.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final PageController pageController;
+
+  const CustomDrawer({Key key, @required this.pageController})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Widget _buildDrawerBackground() => Container(
@@ -31,8 +36,7 @@ class CustomDrawer extends StatelessWidget {
                       child: Text(
                         "Flutter's\nClothing",
                         style: TextStyle(
-                            fontSize: 34,
-                            fontWeight: FontWeight.w500),
+                            fontSize: 34, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Positioned(
@@ -63,10 +67,22 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               Divider(),
-              DrawerTile(icon: Icons.home, text: "Inicio"),
-              DrawerTile(icon: Icons.list, text: "Produtos"),
-              DrawerTile(icon: Icons.location_on, text: "Lojas"),
-              DrawerTile(icon: Icons.playlist_add_check, text: "Meus Pedidos"),
+              DrawerTile(
+                  icon: Icons.home,
+                  text: "Inicio",
+                  pageController: pageController, page: 1),
+              DrawerTile(
+                  icon: Icons.list,
+                  text: "Produtos",
+                  pageController: pageController, page: 2),
+              DrawerTile(
+                  icon: Icons.location_on,
+                  text: "Lojas",
+                  pageController: pageController, page: 3),
+              DrawerTile(
+                  icon: Icons.playlist_add_check,
+                  text: "Meus Pedidos",
+                  pageController: pageController, page: 4),
             ],
           ),
         ],
