@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/src/screens/signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignupScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Entrar"),
+        title: Text("Cadastrar Conta"),
         centerTitle: true,
-        actions: <Widget>[
-          FlatButton(
-            child: Text("CRIAR CONTA", style: TextStyle(fontSize: 15)),
-            textColor: Colors.white,
-            onPressed: () {
-                    Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SignupScreen()));
-            },
-          ),
-        ],
       ),
       body: Form(
           key: _formKey,
