@@ -16,6 +16,12 @@ class SignupScreen extends StatelessWidget {
             padding: EdgeInsets.all(16),
             children: <Widget>[
               TextFormField(
+                  decoration: InputDecoration(hintText: "Nome completo"),
+                  validator: (String text) {
+                    if (text.isEmpty) return "Nome inválido";
+                  }),
+              SizedBox(height: 16),
+              TextFormField(
                   decoration: InputDecoration(hintText: "E-mail"),
                   keyboardType: TextInputType.emailAddress,
                   validator: (String text) {
@@ -29,23 +35,19 @@ class SignupScreen extends StatelessWidget {
                   if (text.isEmpty || text.length < 6) return "Senha inválida";
                 },
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  onPressed: () {},
-                  child:
-                      Text("Esqueci minha senha", textAlign: TextAlign.right),
-                  padding: EdgeInsets.zero,
-                ),
+                   TextFormField(
+                decoration: InputDecoration(hintText: "Endereço"),
+                validator: (text) {
+                  if (text.isEmpty) return "Endereço inválido";
+                },
               ),
               SizedBox(height: 16),
               SizedBox(
                 height: 44,
                 child: RaisedButton(
                   child: Text(
-                    "Entrar",
-                    style: TextStyle(
-                        fontSize: 18),
+                    "Cadastrar",
+                    style: TextStyle(fontSize: 18),
                   ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {}

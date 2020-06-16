@@ -15,8 +15,8 @@ class LoginScreen extends StatelessWidget {
             child: Text("CRIAR CONTA", style: TextStyle(fontSize: 15)),
             textColor: Colors.white,
             onPressed: () {
-                    Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SignupScreen()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignupScreen()));
             },
           ),
         ],
@@ -55,8 +55,7 @@ class LoginScreen extends StatelessWidget {
                 child: RaisedButton(
                   child: Text(
                     "Entrar",
-                    style: TextStyle(
-                        fontSize: 18),
+                    style: TextStyle(fontSize: 18),
                   ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {}
