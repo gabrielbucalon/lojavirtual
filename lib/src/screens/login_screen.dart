@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/src/models/user_model.dart';
 import 'package:lojavirtual/src/screens/signup_screen.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -21,7 +23,12 @@ class LoginScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Form(
+      body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+        if (model.isLoading) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+
+        return Form(
           key: _formKey,
           child: ListView(
             padding: EdgeInsets.all(16),
@@ -59,13 +66,17 @@ class LoginScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {}
+
+
+                    model.signIn();
                   },
                   textColor: Colors.white,
                   color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
-          )),
+          ));
+      }),
     );
   }
 }
