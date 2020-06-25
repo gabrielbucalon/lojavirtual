@@ -49,7 +49,18 @@ class UserModel extends Model {
 
   void recoverPassword() {}
 
-  void isLoggedIn() {}
+  bool isLoggedIn() {
+    return _firebaseUser != null;
+  }
+
+  void signOut() async{
+    await _auth.signOut();
+
+    userData = Map();
+    _firebaseUser = null;
+
+    notifyListeners();
+  }
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) {
     this.userData = userData;
