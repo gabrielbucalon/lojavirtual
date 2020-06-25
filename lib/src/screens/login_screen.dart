@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
             textColor: Colors.white,
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SignupScreen()));
+                  MaterialPageRoute(builder: (context) => SignUpScreen()));
             },
           ),
         ],
