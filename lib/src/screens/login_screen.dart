@@ -36,6 +36,7 @@ class LoginScreen extends StatelessWidget {
               TextFormField(
                   decoration: InputDecoration(hintText: "E-mail"),
                   keyboardType: TextInputType.emailAddress,
+                  // ignore: missing_return
                   validator: (String text) {
                     if (text.isEmpty || !text.contains("@"))
                       return "E-mail inválido!";
@@ -43,7 +44,8 @@ class LoginScreen extends StatelessWidget {
               TextFormField(
                 decoration: InputDecoration(hintText: "Senha"),
                 obscureText: true,
-                validator: (text) {
+                // ignore: missing_return
+                validator: (String text) {
                   if (text.isEmpty || text.length < 6) return "Senha inválida";
                 },
               ),

@@ -19,7 +19,6 @@ class CustomDrawer extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         );
-    Size size = MediaQuery.of(context).size;
     return Drawer(
       child: Stack(
         children: <Widget>[

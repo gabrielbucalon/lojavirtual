@@ -62,6 +62,7 @@ class UserModel extends Model {
     notifyListeners();
   }
 
+  // ignore: missing_return
   Future<Null> _saveUserData(Map<String, dynamic> userData) {
     this.userData = userData;
     Firestore.instance

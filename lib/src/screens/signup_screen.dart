@@ -36,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(hintText: "Nome completo"),
+                    // ignore: missing_return
                     validator: (String text) {
                       if (text.isEmpty) return "Nome inválido";
                     }),
@@ -44,6 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _emailController,
                     decoration: InputDecoration(hintText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
+                    // ignore: missing_return
                     validator: (String text) {
                       if (text.isEmpty || !text.contains("@"))
                         return "E-mail inválido!";
@@ -52,7 +54,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _passController,
                   decoration: InputDecoration(hintText: "Senha"),
                   obscureText: true,
-                  validator: (text) {
+                  // ignore: missing_return
+                  validator: (String text) {
                     if (text.isEmpty || text.length < 6)
                       return "Senha inválida";
                   },
@@ -60,7 +63,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   controller: _addressController,
                   decoration: InputDecoration(hintText: "Endereço"),
-                  validator: (text) {
+                  // ignore: missing_return
+                  validator: (String text) {
                     if (text.isEmpty) return "Endereço inválido";
                   },
                 ),
