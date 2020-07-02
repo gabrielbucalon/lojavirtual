@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
@@ -13,11 +12,18 @@ class UserModel extends Model {
 
   bool isLoading = false;
 
-  void signUp(
+  @override
+  void addListener(VoidCallback listener){
+    super.addListener((listener));
+
+    _localCurrentUser();
+  }
+
+  Future<void> signUp(
       {@required Map<String, dynamic> userData,
       @required String pass,
       @required VoidCallback onSucess,
-      @required VoidCallback onFail}) {
+      @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
@@ -37,7 +43,11 @@ class UserModel extends Model {
     });
   }
 
-  void signIn() async {
+  void signIn(
+      {@required String email,
+      @required String pass,
+      @required VoidCallback onSucess,
+      @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
@@ -45,6 +55,21 @@ class UserModel extends Model {
 
     isLoading = false;
     notifyListeners();
+
+    _auth.signInWithEmailAndPassword(email: email, password: pass).then((user) async {
+      _firebaseUser = user;
+
+      await _localCurrentUser();
+
+      onSucess();
+      isLoading = false;
+
+      notifyListeners();
+    }).catchError((e) {
+      onFail();
+      isLoading = false;
+      notifyListeners();
+    });
   }
 
   void recoverPassword() {}
@@ -69,5 +94,21 @@ class UserModel extends Model {
         .collection("users")
         .document(_firebaseUser.uid)
         .setData(userData);
+  }
+
+  Future<Null> _localCurrentUser() async {
+    if (_firebaseUser == null) {
+      _firebaseUser = await _auth.currentUser();
+    }
+    if (_firebaseUser != null) {
+      if (userData["name"] == null) {
+        DocumentSnapshot docUser = await Firestore.instance
+            .collection("users")
+            .document(_firebaseUser.uid)
+            .get();
+        userData = docUser.data;
+      }
+    }
+    notifyListeners();
   }
 }

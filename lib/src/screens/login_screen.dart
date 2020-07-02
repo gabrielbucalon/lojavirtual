@@ -3,12 +3,23 @@ import 'package:lojavirtual/src/models/user_model.dart';
 import 'package:lojavirtual/src/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+  final _passController = TextEditingController();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Entrar"),
         centerTitle: true,
@@ -36,6 +47,7 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               children: <Widget>[
                 TextFormField(
+                    controller: _emailController,
                     decoration: InputDecoration(hintText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
                     // ignore: missing_return
@@ -44,6 +56,7 @@ class LoginScreen extends StatelessWidget {
                         return "E-mail inválido!";
                     }),
                 TextFormField(
+                  controller: _passController,
                   decoration: InputDecoration(hintText: "Senha"),
                   obscureText: true,
                   // ignore: missing_return
@@ -72,7 +85,11 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {}
 
-                      model.signIn();
+                      model.signIn(
+                          email: _emailController.text,
+                          pass: _passController.text,
+                          onSucess: _onSucess,
+                          onFail: _onFail);
                     },
                     textColor: Colors.white,
                     color: Theme.of(context).primaryColor,
@@ -83,4 +100,39 @@ class LoginScreen extends StatelessWidget {
       }),
     );
   }
+
+  void _onSucess() {
+    Navigator.of(context).pop();
+  }
+
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Ops :( \n Falha ao entrar"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
+  }
 }
+
+// class ManageScackBar extends StatelessWidget {
+//   const ManageScackBar({
+//     Key key,
+//     @required this.context,
+//     @required this.text,
+//     @required this.duration,
+//     this.color,
+//   }) : super(key: key);
+
+//   final BuildContext context;
+//   final String text;
+//   final int duration;
+//   final Color color;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Scaffold.of(context).showSnackBar(SnackBar(
+//       content: Text(text),
+//       duration: Duration(seconds: duration),
+//       backgroundColor: color,
+//     ));
+//   }
