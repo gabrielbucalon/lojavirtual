@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProductData{
-  
+class ProductData {
   String category;
   String id;
 
@@ -21,5 +20,4 @@ class ProductData{
     images = snapshot.data["image"];
     sizes = snapshot.data["sizes"];
   }
-
 }

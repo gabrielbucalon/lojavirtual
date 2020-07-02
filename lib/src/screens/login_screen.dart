@@ -25,59 +25,61 @@ class LoginScreen extends StatelessWidget {
       ),
       body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
         if (model.isLoading) {
-          return Center(child: CircularProgressIndicator(),);
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return Form(
-          key: _formKey,
-          child: ListView(
-            padding: EdgeInsets.all(16),
-            children: <Widget>[
-              TextFormField(
-                  decoration: InputDecoration(hintText: "E-mail"),
-                  keyboardType: TextInputType.emailAddress,
+            key: _formKey,
+            child: ListView(
+              padding: EdgeInsets.all(16),
+              children: <Widget>[
+                TextFormField(
+                    decoration: InputDecoration(hintText: "E-mail"),
+                    keyboardType: TextInputType.emailAddress,
+                    // ignore: missing_return
+                    validator: (String text) {
+                      if (text.isEmpty || !text.contains("@"))
+                        return "E-mail inválido!";
+                    }),
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Senha"),
+                  obscureText: true,
                   // ignore: missing_return
                   validator: (String text) {
-                    if (text.isEmpty || !text.contains("@"))
-                      return "E-mail inválido!";
-                  }),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Senha"),
-                obscureText: true,
-                // ignore: missing_return
-                validator: (String text) {
-                  if (text.isEmpty || text.length < 6) return "Senha inválida";
-                },
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                  onPressed: () {},
-                  child:
-                      Text("Esqueci minha senha", textAlign: TextAlign.right),
-                  padding: EdgeInsets.zero,
-                ),
-              ),
-              SizedBox(height: 16),
-              SizedBox(
-                height: 44,
-                child: RaisedButton(
-                  child: Text(
-                    "Entrar",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {}
-
-
-                    model.signIn();
+                    if (text.isEmpty || text.length < 6)
+                      return "Senha inválida";
                   },
-                  textColor: Colors.white,
-                  color: Theme.of(context).primaryColor,
                 ),
-              ),
-            ],
-          ));
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    onPressed: () {},
+                    child:
+                        Text("Esqueci minha senha", textAlign: TextAlign.right),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+                SizedBox(height: 16),
+                SizedBox(
+                  height: 44,
+                  child: RaisedButton(
+                    child: Text(
+                      "Entrar",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {}
+
+                      model.signIn();
+                    },
+                    textColor: Colors.white,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ));
       }),
     );
   }

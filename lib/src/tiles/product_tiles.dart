@@ -12,8 +12,8 @@ class ProductTiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => (ProductScreen(product: data))));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => (ProductScreen(product: data))));
       },
       child: Card(
         child: type == "grid"

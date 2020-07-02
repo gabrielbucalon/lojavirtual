@@ -53,7 +53,7 @@ class UserModel extends Model {
     return _firebaseUser != null;
   }
 
-  void signOut() async{
+  void signOut() async {
     await _auth.signOut();
 
     userData = Map();

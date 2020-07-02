@@ -14,10 +14,11 @@ class ProductsTab extends StatelessWidget {
           );
         } else {
           var divideTiles = ListTile.divideTiles(
-              tiles: snapshot.data.documents.map((doc) {
-                return CategoryTile(snapshot: doc);
-              }).toList(),
-              color: Colors.grey[500]).toList();
+                  tiles: snapshot.data.documents.map((doc) {
+                    return CategoryTile(snapshot: doc);
+                  }).toList(),
+                  color: Colors.grey[500])
+              .toList();
 
           return ListView(children: divideTiles);
         }
