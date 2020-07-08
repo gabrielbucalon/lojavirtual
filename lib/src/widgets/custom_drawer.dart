@@ -57,8 +57,12 @@ class CustomDrawer extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
+                                if (!model.isLoggedIn()) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                                } else {
+                                  model.signOut();
+                                }
                               },
                               child: Text(
                                 !model.isLoggedIn()

@@ -13,10 +13,10 @@ class UserModel extends Model {
   bool isLoading = false;
 
   @override
-  void addListener(VoidCallback listener){
+  void addListener(VoidCallback listener) {
     super.addListener((listener));
 
-    _localCurrentUser();
+    _loadCurrentUser();
   }
 
   Future<void> signUp(
@@ -56,10 +56,12 @@ class UserModel extends Model {
     isLoading = false;
     notifyListeners();
 
-    _auth.signInWithEmailAndPassword(email: email, password: pass).then((user) async {
+    _auth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((user) async {
       _firebaseUser = user;
 
-      await _localCurrentUser();
+      await _loadCurrentUser();
 
       onSucess();
       isLoading = false;
@@ -72,7 +74,9 @@ class UserModel extends Model {
     });
   }
 
-  void recoverPassword() {}
+  void recoverPassword(String email) {
+    _auth.sendPasswordResetEmail(email: email);
+  }
 
   bool isLoggedIn() {
     return _firebaseUser != null;
@@ -96,7 +100,7 @@ class UserModel extends Model {
         .setData(userData);
   }
 
-  Future<Null> _localCurrentUser() async {
+  Future<Null> _loadCurrentUser() async {
     if (_firebaseUser == null) {
       _firebaseUser = await _auth.currentUser();
     }
