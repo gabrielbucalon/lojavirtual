@@ -6,7 +6,7 @@ import 'package:scoped_model/scoped_model.dart';
 class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  FirebaseUser _firebaseUser;
+  FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
   // Usuario atual
 
@@ -31,7 +31,7 @@ class UserModel extends Model {
         .createUserWithEmailAndPassword(
             email: userData["email"], password: pass)
         .then((user) async {
-      _firebaseUser = user;
+      firebaseUser = user;
       await _saveUserData(userData);
       onSucess();
       isLoading = false;
@@ -59,7 +59,7 @@ class UserModel extends Model {
     _auth
         .signInWithEmailAndPassword(email: email, password: pass)
         .then((user) async {
-      _firebaseUser = user;
+      firebaseUser = user;
 
       await _loadCurrentUser();
 
@@ -79,14 +79,14 @@ class UserModel extends Model {
   }
 
   bool isLoggedIn() {
-    return _firebaseUser != null;
+    return firebaseUser != null;
   }
 
   void signOut() async {
     await _auth.signOut();
 
     userData = Map();
-    _firebaseUser = null;
+    firebaseUser = null;
 
     notifyListeners();
   }
@@ -96,19 +96,19 @@ class UserModel extends Model {
     this.userData = userData;
     Firestore.instance
         .collection("users")
-        .document(_firebaseUser.uid)
+        .document(firebaseUser.uid)
         .setData(userData);
   }
 
   Future<Null> _loadCurrentUser() async {
-    if (_firebaseUser == null) {
-      _firebaseUser = await _auth.currentUser();
+    if (firebaseUser == null) {
+      firebaseUser = await _auth.currentUser();
     }
-    if (_firebaseUser != null) {
+    if (firebaseUser != null) {
       if (userData["name"] == null) {
         DocumentSnapshot docUser = await Firestore.instance
             .collection("users")
-            .document(_firebaseUser.uid)
+            .document(firebaseUser.uid)
             .get();
         userData = docUser.data;
       }
